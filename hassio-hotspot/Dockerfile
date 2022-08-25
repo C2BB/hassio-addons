@@ -70,6 +70,7 @@ RUN apk update && apk add --no-cache    \
 COPY hostapd.conf /
 COPY udhcpd.conf /etc/udhcpd.conf
 COPY run.sh /
+RUN echo b43 >> /etc/modules 
 RUN chmod a+x /run.sh
 
 CMD [ "/run.sh" ]
