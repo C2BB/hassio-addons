@@ -1,22 +1,16 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
-
-LABEL João Loureiro <joaofl@gmail.com>
-
-# Set shell
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
-ENV LANG C.UTF-8
-
-
-
-
-
-
+#FROM alpine:latest
 
 # install required packages to build "alpine linux" packages
 RUN apk add --update --no-cache --no-progress alpine-sdk coreutils bash
 RUN apk add --update --no-cache --no-progress sudo
+RUN apk add --update --no-cache --no-progress b43-fwcutter
+
+# Set shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+ENV LANG C.UTF-8
+
 
 # setup directory for built packages
 RUN mkdir -p /var/cache/distfiles
@@ -34,9 +28,7 @@ RUN adduser -D user1
 RUN addgroup user1 abuild
 
 # setup directory to pass in build instructions files for abuild
-VOLUME /home/user1/aports
-WORKDIR /home/user1/aports
-RUN chown user1:user1 /home/user1/aports
+WORKDIR /home/user1
 
 # make user1 the current user in the image
 USER user1
@@ -48,17 +40,17 @@ RUN abuild-keygen -a -i -n
 RUN git config --global user.name "Build User"
 RUN git config --global user.email "build-user@example.com"
 
-RUN git clone git://git.alpinelinux.org/aports
+RUN git clone --depth 1 -b 3.15-stable git://git.alpinelinux.org/aports /home/user1/aports/
 
-WORKDIR /home/user1/aports/aports/non-free/b43-firmware
+
+WORKDIR /home/user1/aports/non-free/b43-firmware
 
 RUN abuild -r
-RUN apk add --allow-untrusted ~/packages/...pkg
-RUN apk add b43-fwcutter b43-firmware
-RUN modprobe b43
-RUN echo b43 >> /etc/modules
 
+USER root
 
+RUN apk add --allow-untrusted /home/user1/packages/non-free/x86_64/b43-firmware-4.150.10.5-r1.apk
+RUN apk add b43-firmware
 
 
 
@@ -71,6 +63,7 @@ RUN apk update && apk add --no-cache    \
     linux-firmware-other                \
     linux-firmware-ath6k                \
     linux-firmware-ath10k               \
+    linux-firmware-brcm               \
     linux-firmware-ath9k_htc &&         \
     rm -rf /var/cache/apk/*
 
