@@ -1,10 +1,10 @@
 {
   "name": "Home Assistant Access Point",
-  "version": "1.2.0",
-  "slug": "home-assistant--access-point",
+  "version": "1.2.1",
+  "slug": "home-assistant-access-point",
   "description": "Access point for your IoT devices with configurable network interface and DHCP server",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
-  "url": "https://github.com/C2BB/hassio-addons/tree/master/home-assistant--access-point",
+  "url": "https://github.com/C2BB/hassio-addons/tree/master/home-assistant-access-point",
   "startup": "system",
   "boot": "auto",
   "host_network": true,
