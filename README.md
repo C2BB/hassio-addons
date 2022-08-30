@@ -4,7 +4,7 @@ More add-ons for your Hass.io
 
 ## This repo includes the following addon (follow the link for more details):
 
-- https://github.com/C2BB/hassio-addons/tree/master/hassio-hotspot
+- https://github.com/C2BB/hassio-addons/tree/master/home-assistant-access-point
 - https://github.com/C2BB/hassio-addons/tree/master/telegraf2hassio
 
 ## Installation
