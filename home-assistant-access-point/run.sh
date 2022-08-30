@@ -138,15 +138,16 @@ if test ${DHCP_SERVER} = true; then
     echo "opt dns      ${DHCP_DNS}"      >> ${UCONFIG}
     echo "opt subnet   ${DHCP_SUBNET}"   >> ${UCONFIG}
     echo "opt router   ${DHCP_ROUTER}"   >> ${UCONFIG}
-    echo ""                              >> ${UCONFIG}
-    
     
     if [ ${#UDHCP_ADDITIONS} -ge 1 ]; then
         ADDITIONS=($UDHCP_ADDITIONS)
         for addition in "${ADDITIONS[@]}"; do
-            echo "$addition"$'\n' >> ${UCONFIG}
+            echo "$addition" >> ${UCONFIG}
         done
     fi
+    
+    echo ""                              >> ${UCONFIG}
+    cat /etc/udhcpd.conf
     
     echo "Starting DHCP server..."
     udhcpd -f &
