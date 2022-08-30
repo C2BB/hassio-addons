@@ -43,7 +43,7 @@
     "dhcp_subnet": "255.255.255.0",
     "dhcp_router": "192.168.2.1",
     "hide_ssid": false,
-    "udhcp_additions":['static_lease 7C:78:B2:2B:3B:B2 192.168.2.70']
+    "udhcp_additions":["static_lease 7C:78:B2:2B:3B:B2 192.168.2.70"]
     
   },
   "schema": {
