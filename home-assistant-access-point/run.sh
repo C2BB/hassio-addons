@@ -139,15 +139,15 @@ if test ${DHCP_SERVER} = true; then
     echo "opt router   ${DHCP_ROUTER}"   >> ${UCONFIG}
     echo ""                              >> ${UCONFIG}  
     
-    for row in $(jq --raw-output '.udhcp_additions[]' $CONFIG_PATH); do
-       echo "$row" >> ${UCONFIG}
-    done
+    #for row in $(jq --raw-output '.udhcp_additions[]' $CONFIG_PATH); do
+    #   echo "$row" >> ${UCONFIG}
+    #done
     
-    #while IFS= read -r line; do
-    #    echo "$line" >> ${UCONFIG}
-    #done <<< $(jq --raw-output '.udhcp_additions[]' $CONFIG_PATH)
+    while IFS= read -r line; do
+        echo "$line" >> ${UCONFIG}
+    done <<< $(jq --raw-output '.udhcp_additions[]' $CONFIG_PATH)
     
-    cat /etc/udhcpd.conf
+    #cat /etc/udhcpd.conf
     echo "Starting DHCP server..."
     udhcpd -f &
 fi
