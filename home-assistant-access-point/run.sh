@@ -40,9 +40,6 @@ DHCP_DNS=$(jq --raw-output ".dhcp_dns" $CONFIG_PATH)
 DHCP_SUBNET=$(jq --raw-output ".dhcp_subnet" $CONFIG_PATH)
 DHCP_ROUTER=$(jq --raw-output ".dhcp_router" $CONFIG_PATH)
 
-UDHCP_ADDITIONS=$(jq --raw-output '.udhcp_additions[]' $CONFIG_PATH)
-echo "$UDHCP_ADDITIONS"
-
 
 # Enforces required env variables
 required_vars=(SSID WPA_PASSPHRASE CHANNEL ADDRESS NETMASK BROADCAST)
@@ -140,16 +137,17 @@ if test ${DHCP_SERVER} = true; then
     echo "opt dns      ${DHCP_DNS}"      >> ${UCONFIG}
     echo "opt subnet   ${DHCP_SUBNET}"   >> ${UCONFIG}
     echo "opt router   ${DHCP_ROUTER}"   >> ${UCONFIG}
+    echo ""                              >> ${UCONFIG}  
     
-    while IFS= read -r line; do
-        echo "$line"
-        echo "$line" >> ${UCONFIG}
-    done <<< "$UDHCP_ADDITIONS"
+    for row in $(jq --raw-output '.udhcp_additions[]' $CONFIG_PATH); do
+       echo "$row" >> ${UCONFIG}
+    done
     
-    echo ""                              >> ${UCONFIG}
+    #while IFS= read -r line; do
+    #    echo "$line" >> ${UCONFIG}
+    #done <<< $(jq --raw-output '.udhcp_additions[]' $CONFIG_PATH)
     
     cat /etc/udhcpd.conf
-    
     echo "Starting DHCP server..."
     udhcpd -f &
 fi
