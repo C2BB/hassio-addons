@@ -41,6 +41,7 @@ DHCP_SUBNET=$(jq --raw-output ".dhcp_subnet" $CONFIG_PATH)
 DHCP_ROUTER=$(jq --raw-output ".dhcp_router" $CONFIG_PATH)
 
 UDHCP_ADDITIONS=$(jq --raw-output '.udhcp_additions[]' $CONFIG_PATH)
+echo "$UDHCP_ADDITIONS"
 
 
 # Enforces required env variables
@@ -141,8 +142,9 @@ if test ${DHCP_SERVER} = true; then
     echo "opt router   ${DHCP_ROUTER}"   >> ${UCONFIG}
     
     if [ ${#UDHCP_ADDITIONS} -ge 1 ]; then
-        ADDITIONS=($UDHCP_ADDITIONS)
-        for addition in "${ADDITIONS[@]}"; do
+
+        for addition in $UDHCP_ADDITIONS; do
+            echo "$addition"
             echo "$addition" >> ${UCONFIG}
         done
     fi
