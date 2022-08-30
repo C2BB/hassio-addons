@@ -40,7 +40,9 @@ DHCP_DNS=$(jq --raw-output ".dhcp_dns" $CONFIG_PATH)
 DHCP_SUBNET=$(jq --raw-output ".dhcp_subnet" $CONFIG_PATH)
 DHCP_ROUTER=$(jq --raw-output ".dhcp_router" $CONFIG_PATH)
 
-UDHCP_ADDITIONS=$(jq --raw-output '.udhcp_additions | join(",")' $CONFIG_PATH)
+UDHCP_ADDITIONS=$(jq --raw-output '.udhcp_additions | join("")' $CONFIG_PATH)
+
+echo $UDHCP_ADDITIONS
 
 # Enforces required env variables
 required_vars=(SSID WPA_PASSPHRASE CHANNEL ADDRESS NETMASK BROADCAST)
