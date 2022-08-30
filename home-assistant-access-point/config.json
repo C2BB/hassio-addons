@@ -1,6 +1,6 @@
 {
   "name": "Home Assistant Access Point",
-  "version": "1.2.9",
+  "version": "1.2.10",
   "slug": "home-assistant-access-point",
   "description": "Access point for your IoT devices with configurable network interface and DHCP server",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
@@ -8,7 +8,7 @@
   "startup": "system",
   "boot": "auto",
   "host_network": true,
-  "apparmor": true,
+  "apparmor": false,
   "host_dbus": true,
   "full_access": true,
   "privileged": [
@@ -43,7 +43,7 @@
     "dhcp_subnet": "255.255.255.0",
     "dhcp_router": "192.168.2.1",
     "hide_ssid": false,
-    "udhcp_additions":["static_lease 7C:78:B2:2B:3B:B2 192.168.2.70", "static_lease 7C:78:B2:2B:3B:B5 192.168.2.71"]
+    "udhcp_additions":["static_lease 7C:78:B2:2B:3B:B2 192.168.2.70"]
     
   },
   "schema": {
